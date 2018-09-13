@@ -1,0 +1,86 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+<div class="container" id="Index">
+    <div class="col-md-2" name="btnMenu">
+        <a class="btn btn-success btn-block" asp-controller="Home" asp-action="AddInLine">@Localizer["ToTheMicrowave"]</a>
+        <a class="btn btn-info btn-block" asp-controller="Home" asp-action="Complete">@Localizer["Complete"]</a>
+        <a class="btn btn-info btn-block" asp-controller="Home" asp-action="Line">@Localizer["Queue"]</a>
+        <a class="btn btn-info btn-block" id="remove">@Localizer["OutOfQueue"]</a>
+    </div>
+    <div class="col-md-10">
+        <div id="message">
+            @{Html.RenderPartial("_Message");}
+        </div>
+
+        <div>
+            <h3>@Localizer["Header"]</h3>
+            <br>
+            <p align="justify">
+                @Localizer["Description"]               
+            </p>
+        </div>
+
+        <div class="row text-center" name="status">
+            @{
+                if (@ViewBag.Status != null)
+                {
+                    var n = 1;
+                    for (var i = 0; i < @ViewBag.Status.Count; i += 2)
+                    {
+                        <div class="col-md-6">
+                            <h2>@Localizer["RelaxRum"] @n</h2>
+                            <div class="col-md-6">
+                                @Localizer["Microwave"] @(i + 1)
+                                <div id="status">
+                                    <strong>@ViewBag.Status[i]</strong>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                @Localizer["Microwave"] @(i + 2)
+                                <div id="status">
+                                    <strong>@ViewBag.Status[i + 1]</strong>
+                                </div>
+                            </div>
+                        </div>
+                        n++;
+                    }
+                }
+            }
+        </div>
+
+        <div class="row text-center" name="update">
+            <button class="btn btn-success" asp-controller="Home" asp-action="UpdateStatus">@Localizer["Update"]</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $("#remove").click(function () {
+            if (confirm(@Localizer["Confirm"])) {
+                $.ajax({
+                    url: '@Url.Action("RemoveInLine", "Home")',
+                    success: function (result) {
+                        $("#message").html(result);
+                    }
+                });
+            }
+        });
+    });
+
+</script>
+<style>
+    div[name='update'] {
+        margin-top: 10px;
+    }
+
+    div[name='btnMenu'] {
+        margin-top: 20px;
+    }
+
+        div[name='btnMenu'] a {
+            margin-bottom: 10px;
+        }
+</style>
+

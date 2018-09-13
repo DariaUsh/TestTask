@@ -1,0 +1,29 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+<h2>@Localizer["Header"]</h2>
+<div class="container">
+    <table class="table">
+        <thead class="thead-inverse">
+            <tr>
+                <td>@Localizer["Number"]</td>
+                <td>@Localizer["Name"]</td>
+            </tr>
+        </thead>
+        <tbody>
+            @if (ViewBag.Line != null)
+            {
+                @foreach (var line in ViewBag.Line)
+                {
+                    <tr>
+                        <td>@line.Number</td>
+                        <td>@line.User.Name</td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+
+
+
