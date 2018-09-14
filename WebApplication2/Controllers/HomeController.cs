@@ -84,8 +84,9 @@ namespace WebApplication2.Controllers
             {
                 if(queue.RemoveInQueue(User.Identity.Name))
                 {
-                    TempData["message"] = localizer["RemoveList"];
+                    TempData["message"] = localizer["RemoveListTrue"];
                 }
+                TempData["message"] = localizer["RemoveListFalse"];
                 return PartialView("_Message");
             }
             catch (Exception ex)

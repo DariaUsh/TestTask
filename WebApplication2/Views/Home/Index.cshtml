@@ -58,7 +58,7 @@
 <script>
     $(function () {
         $("#remove").click(function () {
-            if (confirm(@Localizer["Confirm"])) {
+            if (confirm("@Localizer["Confirm"]")) {
                 $.ajax({
                     url: '@Url.Action("RemoveInLine", "Home")',
                     success: function (result) {

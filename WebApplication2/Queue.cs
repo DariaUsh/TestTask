@@ -57,7 +57,7 @@ namespace WebApplication2
             if (userFind != null)
             {
                 var user = db.Line.FirstOrDefault(q => q.UserId == userFind.Id);
-                numberUser = user.Number;
+                numberUser = user != null? user.Number : 0;
                 return true;
             }
             return false;          

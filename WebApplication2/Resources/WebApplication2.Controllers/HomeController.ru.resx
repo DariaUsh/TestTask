@@ -129,11 +129,14 @@
   <data name="RelaxRum1" xml:space="preserve">
     <value>Комната отдыха №1</value>
   </data>
-  <data name="RemoveList" xml:space="preserve">
-    <value>"Вы удалены из списка очереди."</value>
+  <data name="RemoveListFalse" xml:space="preserve">
+    <value>Вас нет в списке очереди</value>
+  </data>
+  <data name="RemoveListTrue" xml:space="preserve">
+    <value>Вы удалены из списка очереди</value>
   </data>
   <data name="ServiceComplete" xml:space="preserve">
-    <value>"Ваше обслуживание завершено."</value>
+    <value>Ваше обслуживание завершено</value>
   </data>
   <data name="UseMicrowave" xml:space="preserve">
     <value>Воспользуйтесь микроволновкой № </value>
