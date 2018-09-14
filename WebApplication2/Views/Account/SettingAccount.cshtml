@@ -11,9 +11,7 @@
 }
 
 @{
-    // получаем сервис IRequestCultureFeature
     var requestCulture = Context.Features.Get<IRequestCultureFeature>();
-    // получаем список поддерживаемых культур
     var cultureItems = LocOptions.Value.SupportedUICultures
         .Select(c => new SelectListItem { Value = c.Name, Text = c.DisplayName })
         .ToList();
@@ -24,6 +22,14 @@
 <form class="form-horizontal" asp-action="SettingAccount" asp-controller="Account" asp-anti-forgery="true">
     <div class="validation" asp-validation-summary="ModelOnly" />
     <div>
+        <div class="form-group">
+            <div class="col-md-1"></div>
+            <div class="col-md-4">
+                <span class="text-danger">
+                    @TempData["message"]
+                </span>
+            </div>
+        </div>
         <div class="form-group">
             <div class="col-md-2">
                 <label asp-for="Name">@SharedLocalizer["Name"]</label><br />

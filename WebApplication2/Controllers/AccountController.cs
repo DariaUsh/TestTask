@@ -52,7 +52,7 @@ namespace WebApplication2.Controllers
                         ViewBag.Status = queue.GetStatusMicrowave();
                         return RedirectToAction("Index", "Home");
                     }
-                    ModelState.AddModelError("", localizer["Incorrect"]);
+                    TempData["message"] = localizer["Incorrect"];
                 }
                 return View(model);
             }catch(Exception ex)
@@ -88,15 +88,14 @@ namespace WebApplication2.Controllers
                         return RedirectToAction("Index", "Home");
                     }
                     else
-                        ModelState.AddModelError("", localizer["Incorrect"]);
+                        TempData["message"] = localizer["Exists"];
                 }
                 return View(model);
             }catch(Exception ex)
             {
                 if (ex.InnerException.Message.Contains("UNIQUE KEY"))
                 {
-                    ModelState.AddModelError("", "exsist");
-                    return View(model);
+                    TempData["message"] = localizer["Exists"];
                 }
                 logger.LogError(ex.Message);
                 return View();
@@ -142,22 +141,18 @@ namespace WebApplication2.Controllers
                         user.Email = model.Email;
                         user.Password = model.Password;
                         await db.SaveChangesAsync();
-                        await Authenticate(model.Email); // аутентификация
+                        await Authenticate(model.Email);
 
                         ViewBag.Status = queue.GetStatusMicrowave();
                         return RedirectToAction("Index", "Home");
                     }
                     else
-                        ModelState.AddModelError("", localizer["Incorrect"]);
+                        TempData["message"] = localizer["Incorrect"];
                 }
                 return View(model);
             }
             catch (Exception ex)
             {
-                if (ex.InnerException.Message.Contains("UNIQUE KEY"))
-                {
-                    return View();
-                }
                 logger.LogError(ex.Message);
                 return View();
             }
