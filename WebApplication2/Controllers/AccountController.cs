@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -55,7 +56,14 @@ namespace WebApplication2.Controllers
                     TempData["message"] = localizer["Incorrect"];
                 }
                 return View(model);
-            }catch(Exception ex)
+            }
+            catch (SqlException ex)
+            {
+                TempData["message"] = localizer["ConnectToDataBase"];
+                logger.LogError(ex.Message);
+                return View();
+            }
+            catch (Exception ex)
             {
                 logger.LogError(ex.Message);
                 return View();
@@ -91,7 +99,14 @@ namespace WebApplication2.Controllers
                         TempData["message"] = localizer["Exists"];
                 }
                 return View(model);
-            }catch(Exception ex)
+            }
+            catch (SqlException ex)
+            {
+                TempData["message"] = localizer["ConnectToDataBase"];
+                logger.LogError(ex.Message);
+                return View();
+            }
+            catch (Exception ex)
             {
                 if (ex.InnerException.Message.Contains("UNIQUE KEY"))
                 {

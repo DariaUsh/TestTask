@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Linq;
 using System.Security.Claims;
@@ -42,7 +43,14 @@ namespace WebApplication2.Controllers
                 }
                 ViewBag.Status = queue.GetStatusMicrowave();
                 return View();
-            }catch(Exception ex)
+            }
+            catch (SqlException ex)
+            {
+                TempData["message"] = localizer["ConnectToDataBase"];
+                logger.LogError(ex.Message);
+                return View("Index");
+            }
+            catch (Exception ex)
             {
                 logger.LogError(ex.Message);
                 return View("Index");
@@ -71,7 +79,13 @@ namespace WebApplication2.Controllers
                 ViewBag.Status = queue.GetStatusMicrowave();
                 return View("Index");
             }
-            catch(Exception ex)
+            catch (SqlException ex)
+            {
+                TempData["message"] = localizer["ConnectToDataBase"];
+                logger.LogError(ex.Message);
+                return View("Index");
+            }
+            catch (Exception ex)
             {
                 logger.LogError(ex.Message);
                 return View("Index");
@@ -89,6 +103,12 @@ namespace WebApplication2.Controllers
                 TempData["message"] = localizer["RemoveListFalse"];
                 return PartialView("_Message");
             }
+            catch (SqlException ex)
+            {
+                TempData["message"] = localizer["ConnectToDataBase"];
+                logger.LogError(ex.Message);
+                return PartialView("_Message");
+            }
             catch (Exception ex)
             {
                 logger.LogError(ex.Message);
@@ -103,10 +123,17 @@ namespace WebApplication2.Controllers
                 var Line = db.Line.Include(c => c.User).ToList();
                 ViewBag.Line = Line;
                 return View("Line");
-            }catch(Exception ex)
+            }
+            catch (SqlException ex)
+            {
+                TempData["message"] = localizer["ConnectToDataBase"];
+                logger.LogError(ex.Message);
+                return View("Line");
+            }
+            catch (Exception ex)
             {
                 logger.LogError(ex.Message);
-                return PartialView("Line");
+                return View("Line");
             }
         }
 
@@ -120,7 +147,14 @@ namespace WebApplication2.Controllers
                 }
                 ViewBag.Status = queue.GetStatusMicrowave();
                 return View("Index");
-            }catch(Exception ex)
+            }
+            catch (SqlException ex)
+            {
+                TempData["message"] = localizer["ConnectToDataBase"];
+                logger.LogError(ex.Message);
+                return View("Index");
+            }
+            catch (Exception ex)
             {
                 logger.LogError(ex.Message);
                 return View("Index");
@@ -133,7 +167,14 @@ namespace WebApplication2.Controllers
             {
                 ViewBag.Status = queue.GetStatusMicrowave();
                 return View("Index");
-            }catch(Exception ex)
+            }
+            catch (SqlException ex)
+            {
+                TempData["message"] = localizer["ConnectToDataBase"];
+                logger.LogError(ex.Message);
+                return View("Index");
+            }
+            catch (Exception ex)
             {
                 logger.LogError(ex.Message);
                 return View("Index");

@@ -23,6 +23,7 @@ namespace WebApplication2
 {
     public class Startup
     {
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -30,11 +31,13 @@ namespace WebApplication2
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            string connection = Configuration.GetConnectionString("ConnectionStr");
-            services.AddDbContext<queueDBContext>(options => options.UseSqlServer(connection));
+
+            var connectionString = Configuration.GetConnectionString("ConnectionStr");
+            if (connectionString == null) connectionString = Configuration.GetConnectionString("DefaultConnection");
+
+            services.AddDbContext<queueDBContext>(options => options.UseSqlServer(connectionString));
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options =>
@@ -67,7 +70,6 @@ namespace WebApplication2
                 });
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             if (env.IsDevelopment())
