@@ -51,6 +51,7 @@ namespace WebApplication2.Controllers
                     {
                         await Authenticate(model.Email);
                         ViewBag.Status = queue.GetStatusMicrowave();
+                        TempData["UserLogin"] = user.Email;
                         return RedirectToAction("Index", "Home");
                     }
                     TempData["message"] = localizer["Incorrect"];

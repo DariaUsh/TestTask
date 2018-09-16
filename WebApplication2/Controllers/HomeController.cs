@@ -1,18 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Diagnostics;
 using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
-using WebApplication2.Models;
 
 namespace WebApplication2.Controllers
 {
@@ -52,9 +45,14 @@ namespace WebApplication2.Controllers
             }
             catch (Exception ex)
             {
+                TempData["message"] = localizer["Errors"];
                 logger.LogError(ex.Message);
                 return View("Index");
-            }           
+            }  
+            finally
+            {
+                TempData["UserLogin"] = User.Identity.Name;
+            }
         }
 
         public IActionResult AddInLine()
@@ -89,7 +87,11 @@ namespace WebApplication2.Controllers
             {
                 logger.LogError(ex.Message);
                 return View("Index");
-            }           
+            }
+            finally
+            {
+                TempData["UserLogin"] = User.Identity.Name;
+            }
         }
 
         public PartialViewResult RemoveInLine()
@@ -135,6 +137,10 @@ namespace WebApplication2.Controllers
                 logger.LogError(ex.Message);
                 return View("Line");
             }
+            finally
+            {
+                TempData["UserLogin"] = User.Identity.Name;
+            }
         }
 
         public IActionResult Complete()
@@ -159,6 +165,10 @@ namespace WebApplication2.Controllers
                 logger.LogError(ex.Message);
                 return View("Index");
             }
+            finally
+            {
+                TempData["UserLogin"] = User.Identity.Name;
+            }
         }
 
         public IActionResult UpdateStatus()
@@ -178,7 +188,11 @@ namespace WebApplication2.Controllers
             {
                 logger.LogError(ex.Message);
                 return View("Index");
-            }            
+            }
+            finally
+            {
+                TempData["UserLogin"] = User.Identity.Name;
+            }
         }
     }
 }
